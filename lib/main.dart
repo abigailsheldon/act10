@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 
 void main() => runApp(const MyApp());
@@ -44,7 +45,6 @@ class _SignupPageState extends State<SignupPage> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              
               // FormBuilderTextField for text input: name, email, password
               
               // Name input
@@ -100,16 +100,23 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 20),
               
               // Submit Button
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState?.saveAndValidate() ?? false) {
-                    // If form is valid, navigate to Home Page.
-                    Navigator.pushNamed(context, '/home');
-                  } else {
-                    // Otherwise, display validation errors
-                  }
-                },
-                child: const Text('Signup'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (_formKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                      // Optionally, navigate to Home Page.
+                      Navigator.pushNamed(context, '/home');
+                    }
+                  },
+                  child: const Text('Signup'),
+                ),
               ),
             ],
           ),
@@ -121,6 +128,16 @@ class _SignupPageState extends State<SignupPage> {
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home Page')),
+      body: const Center(
+        child: Text('Signup successful! Welcome to the Home Page!'),
+      ),
+    );
+  }
 }
 
 // Create a Form widget.
