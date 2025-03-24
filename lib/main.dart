@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,14 +12,21 @@ class MyApp extends StatelessWidget {
     const appTitle = 'Form Validation Demo';
     return MaterialApp(
       title: appTitle,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(appTitle),
-        ),
-        body: const MyCustomForm(),
-      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SignupPage(),
+        '/home': (context) => const HomePage(),
+      },
     );
   }
+}
+
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 }
 
 // Create a Form widget.
