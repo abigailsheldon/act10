@@ -22,6 +22,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/* 
+SignupPage class:
+    A stateful widget that displays signup form.
+    Uses FormBuilder to create form fields for name, email, date of birth, and password.
+*/
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
@@ -29,10 +34,22 @@ class SignupPage extends StatefulWidget {
   _SignupPageState createState() => _SignupPageState();
 }
 
+/* 
+_SignupPageState class:
+    Manages state of SignupPage.
+    Contains global key to identify and validate form.
+    Builds UI of signup form with validation.
+*/
 class _SignupPageState extends State<SignupPage> {
   // Global key to identify form and save form data for validation
   final _formKey = GlobalKey<FormBuilderState>();
 
+
+  /*  
+    _inputDecoration method:
+        Returns an InputDecoration with a rounded border and hint text.
+        Used to style all form input fields.
+  */
   InputDecoration _inputDecoration(String label, {String? helperText}) {
     return InputDecoration(
       labelText: label,
@@ -140,6 +157,11 @@ class _SignupPageState extends State<SignupPage> {
   }
 }
 
+/* 
+  HomePage class:
+      A stateless widget that displays simple message.
+      Contains a button to return to the SignupPage so the user can resubmit form.
+*/
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -147,12 +169,27 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Home Page')),
-      body: const Center(
-        child: Text('Signup complete! Thank you!'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Signup complete! Thank you!'),
+            const SizedBox(height: 20),
+            // Button to return to the Signup Page.
+            ElevatedButton(
+              onPressed: () {
+                // Navigate back to Signup Page.
+                Navigator.pushNamed(context, '/');
+              },
+              child: const Text('Return to Signup'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
 
 // Create a Form widget.
 class MyCustomForm extends StatefulWidget {
