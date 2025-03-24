@@ -33,6 +33,16 @@ class _SignupPageState extends State<SignupPage> {
   // Global key to identify form and save form data for validation
   final _formKey = GlobalKey<FormBuilderState>();
 
+  // A common InputDecoration for rounded borders.
+  InputDecoration _inputDecoration(String label) {
+    return InputDecoration(
+      labelText: label,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,56 +54,54 @@ class _SignupPageState extends State<SignupPage> {
           // Global key
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               // FormBuilderTextField for text input: name, email, password
               
               // Name input
               FormBuilderTextField(
                 name: 'name',
-                decoration: const InputDecoration(labelText: 'Name'),
+                decoration: _inputDecoration('Name'),
                 // Input validation 
                 validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(context,
-                      errorText: 'Name required'),
+                  FormBuilderValidators.required(errorText: 'Name required'),
                 ]),
               ),
+              const SizedBox(height: 16),
               
               // Email input
               FormBuilderTextField(
                 name: 'email',
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: _inputDecoration('Email'),
                 // Validation
                 validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(context,
-                      errorText: 'Email required'),
-                  FormBuilderValidators.email(context,
-                      errorText: 'Please enter a valid email'),
+                  FormBuilderValidators.required(errorText: 'Email required'),
+                  FormBuilderValidators.email(errorText: 'Please enter a valid email'),
                 ]),
               ),
+              const SizedBox(height: 16),
               
               // FormBuilderDateTimePicker for DOB
               // DOB
               FormBuilderDateTimePicker(
                 name: 'dob',
                 inputType: InputType.date,
-                decoration: const InputDecoration(labelText: 'Date of Birth'),
+                decoration: _inputDecoration('Date of Birth'),
                 format: DateFormat('MM-dd-yyyy'),
                 // Validation
-                validator: FormBuilderValidators.required(context,
-                    errorText: 'DOB required'),
+                validator: FormBuilderValidators.required(errorText: 'DOB required'),
               ),
+              const SizedBox(height: 16),
               
               // Password field
               FormBuilderTextField(
                 name: 'password',
-                decoration: const InputDecoration(labelText: 'Password'),
+                decoration: _inputDecoration('Password'),
                 obscureText: true,
                 // Validation
                 validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(context,
-                      errorText: 'Password required'),
-                  FormBuilderValidators.minLength(context, 6,
-                      errorText: 'Password must meet requirements'),
+                  FormBuilderValidators.required(errorText: 'Password required'),
+                  FormBuilderValidators.minLength(6, errorText: 'Password must meet requirements'),
                 ]),
               ),
               
@@ -134,7 +142,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Home Page')),
       body: const Center(
-        child: Text('Signup successful! Welcome to the Home Page!'),
+        child: Text('Signup complete! Thank you!'),
       ),
     );
   }
@@ -174,7 +182,14 @@ class MyCustomFormState extends State<MyCustomForm> {
               }
               return null;
             },
+            decoration: InputDecoration(
+              labelText: 'Text',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+            ),
           ),
+          const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
