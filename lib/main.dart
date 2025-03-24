@@ -23,6 +23,100 @@ class MyApp extends StatelessWidget {
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
+
+  @override
+  _SignupPageState createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  // Global key to identify form and save form data for validation
+  final _formKey = GlobalKey<FormBuilderState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Signup Page')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        // FormBuilder wraps the form and handles state
+        child: FormBuilder(
+          // Global key
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              
+              // FormBuilderTextField for text input: name, email, password
+              
+              // Name input
+              FormBuilderTextField(
+                name: 'name',
+                decoration: const InputDecoration(labelText: 'Name'),
+                // Input validation 
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(context,
+                      errorText: 'Name required'),
+                ]),
+              ),
+              
+              // Email input
+              FormBuilderTextField(
+                name: 'email',
+                decoration: const InputDecoration(labelText: 'Email'),
+                // Validation
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(context,
+                      errorText: 'Email required'),
+                  FormBuilderValidators.email(context,
+                      errorText: 'Please enter a valid email'),
+                ]),
+              ),
+              
+              // FormBuilderDateTimePicker for DOB
+              // DOB
+              FormBuilderDateTimePicker(
+                name: 'dob',
+                inputType: InputType.date,
+                decoration: const InputDecoration(labelText: 'Date of Birth'),
+                format: DateFormat('MM-dd-yyyy'),
+                // Validation
+                validator: FormBuilderValidators.required(context,
+                    errorText: 'DOB required'),
+              ),
+              
+              // Password field
+              FormBuilderTextField(
+                name: 'password',
+                decoration: const InputDecoration(labelText: 'Password'),
+                obscureText: true,
+                // Validation
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(context,
+                      errorText: 'Password required'),
+                  FormBuilderValidators.minLength(context, 6,
+                      errorText: 'Password must meet requirements'),
+                ]),
+              ),
+              
+              const SizedBox(height: 20),
+              
+              // Submit Button
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState?.saveAndValidate() ?? false) {
+                    // If form is valid, navigate to Home Page.
+                    Navigator.pushNamed(context, '/home');
+                  } else {
+                    // Otherwise, display validation errors
+                  }
+                },
+                child: const Text('Signup'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class HomePage extends StatelessWidget {
