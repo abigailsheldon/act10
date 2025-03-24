@@ -3,7 +3,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 
-
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -99,7 +98,7 @@ class _SignupPageState extends State<SignupPage> {
                 decoration: _inputDecoration(
                   'Password',
                   helperText:
-                      'Must be at least 8 characters, include at least 2 numbers and 1 special character',
+                      'Must be at least 8 characters, include at least 2 numbers, and 1 special character',
                 ),
                 obscureText: true,
                 // Validation
@@ -107,7 +106,7 @@ class _SignupPageState extends State<SignupPage> {
                   FormBuilderValidators.required(errorText: 'Password required'),
                   FormBuilderValidators.minLength(8, errorText: 'Password must be at least 8 characters'),
                   FormBuilderValidators.match(
-                    r'^(?=(?:.*\d){2,})(?=.*[!@#\$&*~]).{8,}$',
+                    RegExp(r'^(?=(?:.*\d){2,})(?=.*[!@#\$&*~]).{8,}$'),
                     errorText: 'Password must contain at least 2 numbers and 1 special character',
                   ),
                 ]),
