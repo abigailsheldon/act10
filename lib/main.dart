@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -33,10 +34,10 @@ class _SignupPageState extends State<SignupPage> {
   // Global key to identify form and save form data for validation
   final _formKey = GlobalKey<FormBuilderState>();
 
-  // A common InputDecoration for rounded borders.
-  InputDecoration _inputDecoration(String label) {
+  InputDecoration _inputDecoration(String label, {String? helperText}) {
     return InputDecoration(
       labelText: label,
+      hintText: helperText,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
@@ -47,9 +48,8 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Signup Page')),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        // FormBuilder wraps the form and handles state
         child: FormBuilder(
           // Global key
           key: _formKey,
@@ -96,15 +96,22 @@ class _SignupPageState extends State<SignupPage> {
               // Password field
               FormBuilderTextField(
                 name: 'password',
-                decoration: _inputDecoration('Password'),
+                decoration: _inputDecoration(
+                  'Password',
+                  helperText:
+                      'Must be at least 8 characters, include at least 2 numbers and 1 special character',
+                ),
                 obscureText: true,
                 // Validation
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(errorText: 'Password required'),
-                  FormBuilderValidators.minLength(6, errorText: 'Password must meet requirements'),
+                  FormBuilderValidators.minLength(8, errorText: 'Password must be at least 8 characters'),
+                  FormBuilderValidators.match(
+                    r'^(?=(?:.*\d){2,})(?=.*[!@#\$&*~]).{8,}$',
+                    errorText: 'Password must contain at least 2 numbers and 1 special character',
+                  ),
                 ]),
               ),
-              
               const SizedBox(height: 20),
               
               // Submit Button
