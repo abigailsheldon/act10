@@ -85,6 +85,17 @@ class _SignupPageState extends State<SignupPage> {
               ),
               const SizedBox(height: 16),
               
+              // Address input field
+              FormBuilderTextField(
+                name: 'address',
+                decoration: _inputDecoration('Address'),
+                // Input validation for address
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(errorText: 'Address required'),
+                ]),
+              ),
+              const SizedBox(height: 16),
+
               // Email input
               FormBuilderTextField(
                 name: 'email',
